@@ -14,7 +14,7 @@ fn pose_bateau(grille: &mut Grille, bateau: &Bateau) -> bool {
 }
 
 
-pub fn start_ia_pnj(grille: &mut Grille) {
+pub fn start(grille: &mut Grille) {
     println!("Remplissage automatique de la grille de l’IA…");
     'outer: loop {
         grille.vide();

@@ -29,7 +29,7 @@ fn pose_bateau(grille: &mut Grille, bateau: &Bateau) -> bool {
 }
 
 
-pub fn start_joueur(grille: &mut Grille) {
+pub fn start(grille: &mut Grille) {
     println!("Remplissage manuel de la grille du joueur…");
     'outer: loop {
         grille.vide();
