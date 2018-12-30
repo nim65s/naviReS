@@ -7,16 +7,18 @@ pub struct Grille {
     carte: HashMap<(i8, i8), Case>,
     visible: bool,
     taille: i8,
+    restant: i8,
 }
 
 impl Grille {
     pub fn new(taille: i8, visible: bool) -> Grille {
-        let mut grille = Grille { carte: HashMap::new(), taille, visible };
+        let mut grille = Grille { carte: HashMap::new(), restant: 0, taille, visible };
         grille.vide();
         grille
     }
 
     pub fn vide(&mut self) {
+        self.restant = 0;
         for col in 0..self.taille {
             for lig in 0..self.taille {
                 self.carte.insert((col, lig), Case::new());
@@ -55,6 +57,7 @@ impl Grille {
         for (col, lig) in &cases {
             self.set(*col, *lig, bateau);
         }
+        self.restant += bateau.len;
         true
     }
 
@@ -70,12 +73,19 @@ impl Grille {
         if self.deja_tire(col, lig) {
             println!("Vous avez déjà tiré ici…");
         } else {
-            self.carte.get_mut(&(col, lig)).unwrap().feu();
+            if self.carte.get_mut(&(col, lig)).unwrap().feu() {
+                self.restant -= 1;
+            }
         }
+    }
+
+    pub fn fin(&self) -> bool {
+        self.restant == 0
     }
 }
 
 pub fn show_grilles(joueur: &Grille, ia_pnj: &Grille) {
+    println!("\n Restant: {} | {}\n", joueur.restant, ia_pnj.restant);
     for lig in -1..=max(joueur.taille, ia_pnj.taille) {
         let mut s = String::new();
 

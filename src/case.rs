@@ -18,14 +18,16 @@ impl Case {
         self.bateau.replace(bateau.copy());
     }
 
-    pub fn feu(&mut self) {
+    pub fn feu(&mut self) -> bool {
         self.tir = true;
         match &self.bateau {
             None => {
                 println!("À l’eau !");
+                false
             },
             Some(bateau) => {
                 println!("{} touché !", bateau.nom());
+                true
             },
         }
     }
