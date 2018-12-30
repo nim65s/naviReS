@@ -14,8 +14,8 @@ impl Case {
         self.bateau.is_none()
     }
 
-    pub fn add_bateau(&mut self, bateau: Bateau) {
-        self.bateau.replace(bateau);
+    pub fn add_bateau(&mut self, bateau: &Bateau) {
+        self.bateau.replace(bateau.copy());
     }
 
     pub fn to_char(&self, visible: bool) -> char {
@@ -25,7 +25,7 @@ impl Case {
                     if self.tir {
                         'x' // touché
                     } else {
-                        bateau.to_char()
+                        bateau.rep
                     }
                 ,
                 None =>

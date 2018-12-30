@@ -1,40 +1,28 @@
-#[derive(Copy, Clone)]
-pub enum Bateau {
-    PorteAvion,
-    Croiseur,
-    ContreTorpilleur,
-    SousMarin,
-    Torpilleur,
+pub struct Bateau {
+    pub rep: char,
+    pub len: i8,
 }
 
-impl Bateau {
-    pub fn to_char(&self) -> char {
-        match self {
-            Bateau::PorteAvion => 'A',
-            Bateau::Croiseur => 'B',
-            Bateau::ContreTorpilleur => 'C',
-            Bateau::SousMarin => 'D',
-            Bateau::Torpilleur => 'E',
-        }
-    }
+pub const BATEAUX : [Bateau; 5] = [
+    Bateau { rep: 'A', len: 5},
+    Bateau { rep: 'B', len: 4},
+    Bateau { rep: 'C', len: 3},
+    Bateau { rep: 'D', len: 3},
+    Bateau { rep: 'E', len: 2},
+];
 
-    pub fn len(&self) -> i8 {
-        match self {
-            Bateau::PorteAvion => 5,
-            Bateau::Croiseur => 4,
-            Bateau::ContreTorpilleur => 3,
-            Bateau::SousMarin => 3,
-            Bateau::Torpilleur => 2,
-        }
+impl Bateau {
+    pub fn copy(&self) -> Bateau {
+        Bateau { rep: self.rep, len: self.len }
     }
 
     pub fn nom(&self) -> String {
-        match self {
-            Bateau::PorteAvion => String::from("Porte-Avion"),
-            Bateau::Croiseur => String::from("Croiseur"),
-            Bateau::ContreTorpilleur => String::from("Contre-Torpilleur"),
-            Bateau::SousMarin => String::from("Sous-Marin"),
-            Bateau::Torpilleur => String::from("Torpilleur"),
+        match self.rep {
+            'A' => String::from("Porte-Avion"),
+            'B' => String::from("Croiseur"),
+            'C' => String::from("Contre-Torpilleur"),
+            'D' => String::from("Sous-Marin"),
+            _ => String::from("Torpilleur"),
         }
     }
 }

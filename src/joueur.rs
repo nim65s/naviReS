@@ -1,10 +1,10 @@
 use std::io;
 
 use crate::grille::Grille;
-use crate::bateau::Bateau;
+use crate::bateau::*;
 
-fn pose_bateau(grille: &mut Grille, bateau: Bateau) -> bool {
-    println!("\nPosons le {} ({} cases)", bateau.nom(), bateau.len());
+fn pose_bateau(grille: &mut Grille, bateau: &Bateau) -> bool {
+    println!("\nPosons le {} ({} cases)", bateau.nom(), bateau.len);
     let mut horizontal = String::new();
     let mut col = String::new();
     let mut lig = String::new();
@@ -30,13 +30,12 @@ fn pose_bateau(grille: &mut Grille, bateau: Bateau) -> bool {
 
 
 pub fn start_joueur(grille: &mut Grille) {
-    loop {
+    println!("Remplissage manuel de la grille du joueur…");
+    'outer: loop {
         grille.vide();
-        if !pose_bateau(grille, Bateau::PorteAvion) { continue; }
-        if !pose_bateau(grille, Bateau::Croiseur) { continue; }
-        if !pose_bateau(grille, Bateau::ContreTorpilleur) { continue; }
-        if !pose_bateau(grille, Bateau::SousMarin) { continue; }
-        if !pose_bateau(grille, Bateau::Torpilleur) { continue; }
+        for bateau in BATEAUX.iter() {
+            if !pose_bateau(grille, bateau) { continue 'outer; }
+        }
         break;
     }
 }

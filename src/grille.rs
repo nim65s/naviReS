@@ -29,11 +29,11 @@ impl Grille {
         self.taille
     }
 
-    pub fn pose_bateau(&mut self, bateau: Bateau, col: i8, lig: i8, horizontal: bool) -> bool {
+    pub fn pose_bateau(&mut self, bateau: &Bateau, col: i8, lig: i8, horizontal: bool) -> bool {
         let c1 = col;
         let l1 = lig;
-        let c2 = col + if horizontal { bateau.len() - 1} else { 0 };
-        let l2 = lig + if horizontal { 0 } else { bateau.len() - 1};
+        let c2 = col + if horizontal { bateau.len - 1} else { 0 };
+        let l2 = lig + if horizontal { 0 } else { bateau.len - 1};
         let mut cases = Vec::new();
 
         for col in c1..=c2 {
@@ -54,7 +54,7 @@ impl Grille {
         true
     }
 
-    fn set(&mut self, col: i8, lig: i8, bateau: Bateau) {
+    fn set(&mut self, col: i8, lig: i8, bateau: &Bateau) {
         self.carte.get_mut(&(col, lig)).unwrap().add_bateau(bateau);
     }
 }
