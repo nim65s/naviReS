@@ -1,0 +1,4 @@
+test:
+  image: rust:slim
+  script:
+    - cargo test
