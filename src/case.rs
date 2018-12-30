@@ -18,6 +18,18 @@ impl Case {
         self.bateau.replace(bateau.copy());
     }
 
+    pub fn feu(&mut self) {
+        self.tir = true;
+        match &self.bateau {
+            None => {
+                println!("À l’eau !");
+            },
+            Some(bateau) => {
+                println!("{} touché !", bateau.nom());
+            },
+        }
+    }
+
     pub fn to_char(&self, visible: bool) -> char {
         if visible {
             match &self.bateau {
@@ -39,11 +51,11 @@ impl Case {
         } else {
             if self.tir {
                 match &self.bateau {
-                    Some(_) => 'X', // touché
+                    Some(bateau) => bateau.rep.to_ascii_lowercase(), // touché
                     None => 'O' // à l’eau
                 }
             } else {
-                '?' // mystère
+                ' ' // mystère
             }
         }
     }

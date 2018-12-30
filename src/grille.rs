@@ -29,6 +29,10 @@ impl Grille {
         self.taille
     }
 
+    pub fn max_char(&self) -> char {
+        std::char::from_digit((self.max() - 1) as u32, 36).unwrap()
+    }
+
     pub fn pose_bateau(&mut self, bateau: &Bateau, col: i8, lig: i8, horizontal: bool) -> bool {
         let c1 = col;
         let l1 = lig;
@@ -56,6 +60,17 @@ impl Grille {
 
     fn set(&mut self, col: i8, lig: i8, bateau: &Bateau) {
         self.carte.get_mut(&(col, lig)).unwrap().add_bateau(bateau);
+    }
+
+    pub fn feu(&mut self, col: i8, lig: i8) {
+        let case = self.carte.get_mut(&(col, lig)).unwrap();
+        if case.tir {
+            println!("Vous avez déjà tiré ici…");
+            return;
+        }
+
+        case.feu();
+
     }
 }
 
