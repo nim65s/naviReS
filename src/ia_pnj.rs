@@ -24,3 +24,21 @@ pub fn start(grille: &mut Grille) {
         break;
     }
 }
+
+pub fn joue(grille: &mut Grille) {
+    println!("Au tour de l’IA !");
+
+    let mut rng = rand::thread_rng();
+    let mut col;
+    let mut lig;
+    loop {
+        col = rng.gen_range(0, grille.max());
+        lig = rng.gen_range(0, grille.max());
+        if !grille.deja_tire(col, lig) {
+            break;
+        }
+    }
+
+    println!("feu sur ({}, {})", col, lig);
+    grille.feu(col, lig)
+}

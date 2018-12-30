@@ -62,15 +62,16 @@ impl Grille {
         self.carte.get_mut(&(col, lig)).unwrap().add_bateau(bateau);
     }
 
+    pub fn deja_tire(& self, col: i8, lig: i8) -> bool{
+        self.carte.get(&(col, lig)).unwrap().tir
+    }
+
     pub fn feu(&mut self, col: i8, lig: i8) {
-        let case = self.carte.get_mut(&(col, lig)).unwrap();
-        if case.tir {
+        if self.deja_tire(col, lig) {
             println!("Vous avez déjà tiré ici…");
-            return;
+        } else {
+            self.carte.get_mut(&(col, lig)).unwrap().feu();
         }
-
-        case.feu();
-
     }
 }
 
