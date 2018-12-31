@@ -23,6 +23,8 @@ fn main() {
             println!("Le joueur Gagne !");
             break;
         }
+        show_grilles(&grille_joueur, &grille_ia_pnj);
+
         ia_pnj::joue(&mut grille_joueur);
         if grille_joueur.fin() {
             println!("L’IA Gagne !");
