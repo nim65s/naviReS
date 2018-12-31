@@ -3,7 +3,7 @@ use std::io;
 use crate::grille::Grille;
 use crate::bateau::*;
 
-fn pose_bateau(grille: &mut Grille, bateau: &Bateau) -> bool {
+fn pose_bateau(grille: &mut Grille, bateau: Bateau) -> bool {
     println!("\nPosons le {} ({} cases)", bateau, bateau.len);
 
     println!("doit-il être horizontal? [true,false]: ");
@@ -32,7 +32,7 @@ pub fn start(grille: &mut Grille) {
     'outer: loop {
         grille.vide();
         for bateau in BATEAUX.iter() {
-            if !pose_bateau(grille, bateau) { continue 'outer; }
+            if !pose_bateau(grille, *bateau) { continue 'outer; }
         }
         break;
     }

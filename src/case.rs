@@ -14,8 +14,8 @@ impl Case {
         self.bateau.is_none()
     }
 
-    pub fn add_bateau(&mut self, bateau: &Bateau) {
-        self.bateau.replace(*bateau);
+    pub fn add_bateau(&mut self, bateau: Bateau) {
+        self.bateau.replace(bateau);
     }
 
     pub fn feu(&mut self) -> bool {
@@ -50,15 +50,13 @@ impl Case {
                     }
                 ,
             }
-        } else {
-            if self.tir {
-                match &self.bateau {
-                    Some(bateau) => bateau.rep.to_ascii_lowercase(), // touché
-                    None => 'O' // à l’eau
-                }
-            } else {
-                ' ' // mystère
+        } else if self.tir {
+            match &self.bateau {
+                Some(bateau) => bateau.rep.to_ascii_lowercase(), // touché
+                None => 'O' // à l’eau
             }
+        } else {
+            ' ' // mystère
         }
     }
 }

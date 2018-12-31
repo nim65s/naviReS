@@ -35,7 +35,7 @@ impl Grille {
         std::char::from_digit((self.taille - 1) as u32, 36).unwrap()
     }
 
-    pub fn pose_bateau(&mut self, bateau: &Bateau, col: i8, lig: i8, horizontal: bool) -> bool {
+    pub fn pose_bateau(&mut self, bateau: Bateau, col: i8, lig: i8, horizontal: bool) -> bool {
         let c1 = col;
         let l1 = lig;
         let c2 = col + if horizontal { bateau.len - 1} else { 0 };
@@ -46,9 +46,10 @@ impl Grille {
             for lig in l1..=l2 {
                 match self.carte.get(&(col, lig)) {
                     None => {return false;},
-                    Some(case) => match case.libre() {
-                        false => {return false;},
-                        true => {cases.push((col, lig));},
+                    Some(case) => if case.libre() {
+                        return false;
+                    } else {
+                        cases.push((col, lig));
                     },
                 }
             }
@@ -62,16 +63,14 @@ impl Grille {
     }
 
     pub fn deja_tire(& self, col: i8, lig: i8) -> bool{
-        self.carte.get(&(col, lig)).unwrap().tir
+        self.carte[&(col, lig)].tir
     }
 
     pub fn feu(&mut self, col: i8, lig: i8) {
         if self.deja_tire(col, lig) {
             println!("Vous avez déjà tiré ici…");
-        } else {
-            if self.carte.get_mut(&(col, lig)).unwrap().feu() {
-                self.restant -= 1;
-            }
+        } else if self.carte.get_mut(&(col, lig)).unwrap().feu() {
+            self.restant -= 1;
         }
     }
 

@@ -1,4 +1,8 @@
 test:
   image: rust:slim
+  before_script:
+    - rustup component add clippy
   script:
+    - cargo build
     - cargo test
+    - cargo clippy -- -D warnings
