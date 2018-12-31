@@ -26,7 +26,7 @@ impl Case {
                 false
             },
             Some(bateau) => {
-                println!("{} touché !", bateau.nom());
+                println!("{} touché !", bateau);
                 true
             },
         }

@@ -1,3 +1,5 @@
+use std::fmt;
+
 #[derive(Copy, Clone)]
 pub struct Bateau {
     pub rep: char,
@@ -12,14 +14,14 @@ pub const BATEAUX : [Bateau; 5] = [
     Bateau { rep: 'E', len: 2},
 ];
 
-impl Bateau {
-    pub fn nom(&self) -> &str {
-        match self.rep {
+impl fmt::Display for Bateau {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{}", match self.rep {
             'A' => "Porte-Avion",
             'B' => "Croiseur",
             'C' => "Contre-Torpilleur",
             'D' => "Sous-Marin",
             _ => "Torpilleur",
-        }
+        })
     }
 }

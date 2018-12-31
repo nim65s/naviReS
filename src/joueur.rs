@@ -4,7 +4,7 @@ use crate::grille::Grille;
 use crate::bateau::*;
 
 fn pose_bateau(grille: &mut Grille, bateau: &Bateau) -> bool {
-    println!("\nPosons le {} ({} cases)", bateau.nom(), bateau.len);
+    println!("\nPosons le {} ({} cases)", bateau, bateau.len);
 
     println!("doit-il être horizontal? [true,false]: ");
     let mut horizontal = String::new();
