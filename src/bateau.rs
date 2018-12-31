@@ -13,13 +13,13 @@ pub const BATEAUX : [Bateau; 5] = [
 ];
 
 impl Bateau {
-    pub fn nom(&self) -> String {
+    pub fn nom(&self) -> &str {
         match self.rep {
-            'A' => String::from("Porte-Avion"),
-            'B' => String::from("Croiseur"),
-            'C' => String::from("Contre-Torpilleur"),
-            'D' => String::from("Sous-Marin"),
-            _ => String::from("Torpilleur"),
+            'A' => "Porte-Avion",
+            'B' => "Croiseur",
+            'C' => "Contre-Torpilleur",
+            'D' => "Sous-Marin",
+            _ => "Torpilleur",
         }
     }
 }
