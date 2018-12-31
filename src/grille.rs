@@ -5,9 +5,9 @@ use std::cmp::max;
 
 pub struct Grille {
     carte: HashMap<(i8, i8), Case>,
-    visible: bool,
-    taille: i8,
-    restant: i8,
+    visible: bool, // généralement oui pour celle du joueur et non pour celle de l’adversaire
+    taille: i8, // hauteur et largeur
+    restant: i8, // Cases avec des cibles pas encore touchées
 }
 
 impl Grille {
@@ -32,7 +32,7 @@ impl Grille {
     }
 
     pub fn max_char(&self) -> char {
-        std::char::from_digit((self.max() - 1) as u32, 36).unwrap()
+        std::char::from_digit((self.taille - 1) as u32, 36).unwrap()
     }
 
     pub fn pose_bateau(&mut self, bateau: &Bateau, col: i8, lig: i8, horizontal: bool) -> bool {
@@ -54,15 +54,11 @@ impl Grille {
             }
         }
 
-        for (col, lig) in &cases {
-            self.set(*col, *lig, bateau);
+        for (col, lig) in cases {
+            self.carte.get_mut(&(col, lig)).unwrap().add_bateau(bateau);
         }
         self.restant += bateau.len;
         true
-    }
-
-    fn set(&mut self, col: i8, lig: i8, bateau: &Bateau) {
-        self.carte.get_mut(&(col, lig)).unwrap().add_bateau(bateau);
     }
 
     pub fn deja_tire(& self, col: i8, lig: i8) -> bool{
