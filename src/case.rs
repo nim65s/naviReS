@@ -15,7 +15,7 @@ impl Case {
     }
 
     pub fn add_bateau(&mut self, bateau: &Bateau) {
-        self.bateau.replace(bateau.copy());
+        self.bateau.replace(*bateau);
     }
 
     pub fn feu(&mut self) -> bool {

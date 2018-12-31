@@ -1,3 +1,4 @@
+#[derive(Copy, Clone)]
 pub struct Bateau {
     pub rep: char,
     pub len: i8,
@@ -12,10 +13,6 @@ pub const BATEAUX : [Bateau; 5] = [
 ];
 
 impl Bateau {
-    pub fn copy(&self) -> Bateau {
-        Bateau { rep: self.rep, len: self.len }
-    }
-
     pub fn nom(&self) -> String {
         match self.rep {
             'A' => String::from("Porte-Avion"),
