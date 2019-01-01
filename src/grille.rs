@@ -1,18 +1,23 @@
-use std::collections::HashMap;
-use crate::case::Case;
 use crate::bateau::Bateau;
+use crate::case::Case;
 use std::cmp::max;
+use std::collections::HashMap;
 
 pub struct Grille {
     carte: HashMap<(i8, i8), Case>,
     visible: bool, // généralement oui pour celle du joueur et non pour celle de l’adversaire
-    taille: i8, // hauteur et largeur
-    restant: i8, // Cases avec des cibles pas encore touchées
+    taille: i8,    // hauteur et largeur
+    restant: i8,   // Cases avec des cibles pas encore touchées
 }
 
 impl Grille {
     pub fn new(taille: i8, visible: bool) -> Grille {
-        let mut grille = Grille { carte: HashMap::new(), restant: 0, taille, visible };
+        let mut grille = Grille {
+            carte: HashMap::new(),
+            restant: 0,
+            taille,
+            visible,
+        };
         grille.vide();
         grille
     }
@@ -24,7 +29,6 @@ impl Grille {
                 self.carte.insert((col, lig), Case::new());
             }
         }
-
     }
 
     pub fn max(&self) -> i8 {
@@ -38,19 +42,23 @@ impl Grille {
     pub fn pose_bateau(&mut self, bateau: Bateau, col: i8, lig: i8, horizontal: bool) -> bool {
         let c1 = col;
         let l1 = lig;
-        let c2 = col + if horizontal { bateau.len - 1} else { 0 };
-        let l2 = lig + if horizontal { 0 } else { bateau.len - 1};
+        let c2 = col + if horizontal { bateau.len - 1 } else { 0 };
+        let l2 = lig + if horizontal { 0 } else { bateau.len - 1 };
         let mut cases = Vec::new();
 
         for col in c1..=c2 {
             for lig in l1..=l2 {
                 match self.carte.get(&(col, lig)) {
-                    None => {return false;},
-                    Some(case) => if case.libre() {
+                    None => {
                         return false;
-                    } else {
-                        cases.push((col, lig));
-                    },
+                    }
+                    Some(case) => {
+                        if case.libre() {
+                            return false;
+                        } else {
+                            cases.push((col, lig));
+                        }
+                    }
                 }
             }
         }
@@ -62,7 +70,7 @@ impl Grille {
         true
     }
 
-    pub fn deja_tire(& self, col: i8, lig: i8) -> bool{
+    pub fn deja_tire(&self, col: i8, lig: i8) -> bool {
         self.carte[&(col, lig)].tir
     }
 
@@ -90,8 +98,7 @@ pub fn show_grilles(joueur: &Grille, ia_pnj: &Grille) {
                     Some(case) => case.to_char(joueur.visible),
                     None => bordure(col, lig, joueur.taille),
                 });
-            }
-            else {
+            } else {
                 s.push(' ');
             }
             s.push(' ');

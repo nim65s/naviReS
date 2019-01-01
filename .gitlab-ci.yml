@@ -1,8 +1,9 @@
 test:
   image: rust:slim
   before_script:
-    - rustup component add clippy
+    - rustup component add clippy rustfmt
   script:
     - cargo build
     - cargo test
     - cargo clippy -- -D warnings
+    - cargo fmt --all -- --check

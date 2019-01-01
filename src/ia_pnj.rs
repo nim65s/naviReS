@@ -1,7 +1,7 @@
 use rand::Rng;
 
-use crate::grille::Grille;
 use crate::bateau::*;
+use crate::grille::Grille;
 
 fn pose_bateau(grille: &mut Grille, bateau: Bateau) -> bool {
     let mut rng = rand::thread_rng();
@@ -13,13 +13,14 @@ fn pose_bateau(grille: &mut Grille, bateau: Bateau) -> bool {
     grille.pose_bateau(bateau, col, lig, horizontal)
 }
 
-
 pub fn start(grille: &mut Grille) {
     println!("Remplissage automatique de la grille de l’IA…");
     'outer: loop {
         grille.vide();
         for bateau in BATEAUX.iter() {
-            if !pose_bateau(grille, *bateau) { continue 'outer; }
+            if !pose_bateau(grille, *bateau) {
+                continue 'outer;
+            }
         }
         break;
     }

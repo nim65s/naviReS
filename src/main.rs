@@ -1,11 +1,10 @@
 mod bateau;
 mod case;
 mod grille;
-mod joueur;
 mod ia_pnj;
+mod joueur;
 
 use crate::grille::*;
-
 
 fn main() {
     println!("Hello, world!");
