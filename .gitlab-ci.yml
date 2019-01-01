@@ -1,7 +1,10 @@
 test:
   image: rust:slim
   before_script:
-    - rustup component add clippy rustfmt cargo-kcov
+    - apt-get update -qqy && apt-get install -qqy cmake g++ pkg-config jq libcurl4-openssl-dev libelf-dev libdw-dev binutils-dev libiberty-dev
+    - rustup component add clippy rustfmt
+    - cargo install cargo-kcov
+    - cargo kcov --print-install-kcov-sh | sh
   script:
     - cargo build
     - cargo test
