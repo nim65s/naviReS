@@ -63,3 +63,34 @@ impl Case {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn libre() {
+        let case = Case::new();
+        assert!(case.libre());
+    }
+
+    #[test]
+    fn to_char() {
+        use crate::bateau::BATEAUX;
+
+        let mut case = Case::new();
+        assert_eq!(case.to_char(true), ' ');
+        assert_eq!(case.to_char(false), ' ');
+        assert!(!case.feu());
+        assert_eq!(case.to_char(true), 'o');
+        assert_eq!(case.to_char(false), 'O');
+
+        let mut case = Case::new();
+        case.add_bateau(BATEAUX[0]);
+        assert_eq!(case.to_char(false), ' ');
+        assert_eq!(case.to_char(true), 'A');
+        assert!(case.feu());
+        assert_eq!(case.to_char(false), 'a');
+        assert_eq!(case.to_char(true), 'x');
+    }
+}

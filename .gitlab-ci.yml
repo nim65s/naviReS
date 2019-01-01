@@ -1,9 +1,11 @@
 test:
   image: rust:slim
   before_script:
-    - rustup component add clippy rustfmt
+    - rustup component add clippy rustfmt cargo-kcov
   script:
     - cargo build
     - cargo test
     - cargo clippy -- -D warnings
     - cargo fmt --all -- --check
+    - cargo kcov
+    - grep percent_covered target/cov/kcov-merged/coverage.json | tail -n1
