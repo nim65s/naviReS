@@ -43,3 +43,18 @@ pub fn joue(grille: &mut Grille) {
     println!("feu sur ({}, {})", col, lig);
     grille.feu(col, lig)
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn ia() {
+        let mut grille = Grille::new(10, true);
+        assert_eq!(grille.restant(), 0);
+        start(&mut grille);
+        assert_eq!(grille.restant(), 17);  // 5 bateaux
+        joue(&mut grille);
+        assert!(grille.restant() == 16 || grille.restant() == 17); // touché ou pas
+    }
+}

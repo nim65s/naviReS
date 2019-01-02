@@ -54,9 +54,9 @@ impl Grille {
                     }
                     Some(case) => {
                         if case.libre() {
-                            return false;
-                        } else {
                             cases.push((col, lig));
+                        } else {
+                            return false;
                         }
                     }
                 }
@@ -84,6 +84,10 @@ impl Grille {
 
     pub fn fin(&self) -> bool {
         self.restant == 0
+    }
+
+    pub fn restant(&self) -> i8 {
+        self.restant
     }
 }
 
@@ -126,5 +130,56 @@ fn bordure(col: i8, lig: i8, taille: i8) -> char {
     match std::char::from_digit(bord as u32, taille as u32) {
         Some(c) => c,
         None => '+',
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::bateau::BATEAUX;
+
+    #[test]
+    fn grille() {
+        let mut grille = Grille::new(10, true);
+
+        // trivial
+        assert_eq!(grille.max(), 10);
+        assert_eq!(grille.max_char(), '9');
+        assert!(grille.fin());
+
+        // mettre des bateaux au même endroit ou en dehors de la carte
+        for bateau in BATEAUX.iter().rev() {
+            println!("{}", bateau.len);
+            if bateau.len == 2 {
+                assert!(grille.pose_bateau(*bateau, 7, 0 as i8, true));
+            } else {
+                assert!(!grille.pose_bateau(*bateau, 7, 0 as i8, true));
+            }
+        }
+
+        // mettre des bateaux correctement
+        for (i, bateau) in BATEAUX.iter().enumerate() {
+            assert!(grille.pose_bateau(*bateau, 0, i as i8, true));
+        }
+        assert!(!grille.fin());
+        assert_eq!(grille.restant(), 19); // 5 bateaux corrects plus un torpilleur
+
+        // tentative de tir
+        assert!(!grille.deja_tire(0, 0));
+        grille.feu(0, 0);
+        assert!(grille.deja_tire(0, 0));
+
+        // nuke it.
+        for col in 0..10 {
+            for lig in 0..10 {
+                grille.feu(col, lig);
+            }
+        }
+        assert!(grille.fin());
+
+        // affichage de grilles de tailles différentes
+        let grille_s = Grille::new(8, true);
+        show_grilles(&grille, &grille_s);
+        show_grilles(&grille_s, &grille);
     }
 }
