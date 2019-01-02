@@ -92,7 +92,7 @@ impl Grille {
 }
 
 pub fn show_grilles(joueur: &Grille, ia_pnj: &Grille) {
-    println!("\n Restant: {} | {}\n", joueur.restant, ia_pnj.restant);
+    println!("\n Restant: {} | {}\n", joueur.restant(), ia_pnj.restant());
     for lig in -1..=max(joueur.taille, ia_pnj.taille) {
         let mut s = String::new();
 
