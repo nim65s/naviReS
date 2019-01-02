@@ -31,7 +31,7 @@ impl Grille {
         }
     }
 
-    pub fn max(&self) -> i8 {
+    pub fn taille(&self) -> i8 {
         self.taille
     }
 
@@ -143,7 +143,7 @@ mod tests {
         let mut grille = Grille::new(10, true);
 
         // trivial
-        assert_eq!(grille.max(), 10);
+        assert_eq!(grille.taille(), 10);
         assert_eq!(grille.max_char(), '9');
         assert!(grille.fin());
 

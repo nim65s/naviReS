@@ -19,7 +19,7 @@ fn pose_bateau(grille: &mut Grille, bateau: Bateau) -> bool {
         .read_line(&mut col)
         .expect("failed to read line");
     let col: char = col.trim().parse().expect("raté…");
-    let col = col.to_digit(grille.max() as u32).unwrap();
+    let col = col.to_digit(grille.taille() as u32).unwrap();
 
     println!("ligne? [0..{}]: ", grille.max_char());
     let mut lig = String::new();
@@ -27,7 +27,7 @@ fn pose_bateau(grille: &mut Grille, bateau: Bateau) -> bool {
         .read_line(&mut lig)
         .expect("failed to read line");
     let lig: char = lig.trim().parse().expect("raté…");
-    let lig = lig.to_digit(grille.max() as u32).unwrap();
+    let lig = lig.to_digit(grille.taille() as u32).unwrap();
 
     grille.pose_bateau(bateau, col as i8, lig as i8, horizontal)
 }
@@ -54,7 +54,7 @@ pub fn joue(grille: &mut Grille) {
         .read_line(&mut col)
         .expect("failed to read line");
     let col: char = col.trim().parse().expect("raté…");
-    let col = col.to_digit(grille.max() as u32).unwrap();
+    let col = col.to_digit(grille.taille() as u32).unwrap();
 
     println!("ligne? [0..{}]: ", grille.max_char());
     let mut lig = String::new();
@@ -62,7 +62,7 @@ pub fn joue(grille: &mut Grille) {
         .read_line(&mut lig)
         .expect("failed to read line");
     let lig: char = lig.trim().parse().expect("raté…");
-    let lig = lig.to_digit(grille.max() as u32).unwrap();
+    let lig = lig.to_digit(grille.taille() as u32).unwrap();
 
     grille.feu(col as i8, lig as i8);
 }
