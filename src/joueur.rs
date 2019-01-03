@@ -13,21 +13,8 @@ fn pose_bateau(grille: &mut Grille, bateau: Bateau) -> bool {
         .expect("failed to read line");
     let horizontal = horizontal.trim().parse().expect("raté…");
 
-    println!("colonne? [0..{}]: ", grille.max_char());
-    let mut col = String::new();
-    io::stdin()
-        .read_line(&mut col)
-        .expect("failed to read line");
-    let col: char = col.trim().parse().expect("raté…");
-    let col = col.to_digit(grille.taille() as u32).unwrap();
-
-    println!("ligne? [0..{}]: ", grille.max_char());
-    let mut lig = String::new();
-    io::stdin()
-        .read_line(&mut lig)
-        .expect("failed to read line");
-    let lig: char = lig.trim().parse().expect("raté…");
-    let lig = lig.to_digit(grille.taille() as u32).unwrap();
+    let col = input_number("colonne", grille.max_char());
+    let lig = input_number("ligne", grille.max_char());
 
     grille.pose_bateau(bateau, col as i8, lig as i8, horizontal)
 }
@@ -48,21 +35,18 @@ pub fn start(grille: &mut Grille) {
 pub fn joue(grille: &mut Grille) {
     println!("Au tour du joueur !");
 
-    println!("colonne? [0..{}]: ", grille.max_char());
-    let mut col = String::new();
-    io::stdin()
-        .read_line(&mut col)
-        .expect("failed to read line");
-    let col: char = col.trim().parse().expect("raté…");
-    let col = col.to_digit(grille.taille() as u32).unwrap();
-
-    println!("ligne? [0..{}]: ", grille.max_char());
-    let mut lig = String::new();
-    io::stdin()
-        .read_line(&mut lig)
-        .expect("failed to read line");
-    let lig: char = lig.trim().parse().expect("raté…");
-    let lig = lig.to_digit(grille.taille() as u32).unwrap();
+    let col = input_number("colonne", grille.max_char());
+    let lig = input_number("ligne", grille.max_char());
 
     grille.feu(col as i8, lig as i8);
+}
+
+fn input_number(name: &str, max: char) -> i8 {
+    println!("{}? [0..{}]: ", name, max);
+    let mut ret = String::new();
+    io::stdin()
+        .read_line(&mut ret)
+        .expect("failed to read line");
+    let ret: char = ret.trim().parse().expect("raté…");
+    ret.to_digit(36).unwrap() as i8
 }
