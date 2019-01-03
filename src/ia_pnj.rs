@@ -15,15 +15,10 @@ fn pose_bateau(grille: &mut Grille, bateau: Bateau) -> bool {
 
 pub fn start(grille: &mut Grille) {
     println!("Remplissage automatique de la grille de l’IA…");
-    'outer: loop {
+    while {
         grille.vide();
-        for bateau in BATEAUX.iter() {
-            if !pose_bateau(grille, *bateau) {
-                continue 'outer;
-            }
-        }
-        break;
-    }
+        BATEAUX.iter().any(|bateau| !pose_bateau(grille, *bateau))
+    } {}
 }
 
 pub fn joue(grille: &mut Grille) {
@@ -32,13 +27,11 @@ pub fn joue(grille: &mut Grille) {
     let mut rng = rand::thread_rng();
     let mut col;
     let mut lig;
-    loop {
+    while {
         col = rng.gen_range(0, grille.taille());
         lig = rng.gen_range(0, grille.taille());
-        if !grille.deja_tire(col, lig) {
-            break;
-        }
-    }
+        grille.deja_tire(col, lig)
+    } {}
 
     println!("feu sur ({}, {})", col, lig);
     grille.feu(col, lig)
