@@ -40,34 +40,28 @@ impl Grille {
     }
 
     pub fn pose_bateau(&mut self, bateau: Bateau, col: i8, lig: i8, horizontal: bool) -> bool {
-        let c1 = col;
-        let l1 = lig;
-        let c2 = col + if horizontal { bateau.len - 1 } else { 0 };
-        let l2 = lig + if horizontal { 0 } else { bateau.len - 1 };
-        let mut cases = Vec::new();
-
-        for col in c1..=c2 {
-            for lig in l1..=l2 {
-                match self.carte.get(&(col, lig)) {
-                    None => {
-                        return false;
-                    }
-                    Some(case) => {
-                        if case.libre() {
-                            cases.push((col, lig));
-                        } else {
-                            return false;
-                        }
-                    }
+        let cases: Vec<(i8, i8)> = (0..bateau.len)
+            .map(|i| {
+                if horizontal {
+                    (col + i, lig)
+                } else {
+                    (col, lig + i)
                 }
-            }
-        }
+            })
+            .collect();
 
-        for (col, lig) in cases {
-            self.carte.get_mut(&(col, lig)).unwrap().add_bateau(bateau);
+        if cases
+            .iter()
+            .all(|case| self.carte.contains_key(&case) && self.carte[&case].libre())
+        {
+            for case in cases {
+                self.carte.get_mut(&case).unwrap().add_bateau(bateau);
+            }
+            self.restant += bateau.len;
+            true
+        } else {
+            false
         }
-        self.restant += bateau.len;
-        true
     }
 
     pub fn deja_tire(&self, col: i8, lig: i8) -> bool {
