@@ -121,10 +121,7 @@ pub fn show_grilles(joueur: &Grille, ia_pnj: &Grille) {
 
 fn bordure(col: i8, lig: i8, taille: i8) -> char {
     let bord = if lig == -1 || lig == taille { col } else { lig };
-    match std::char::from_digit(bord as u32, taille as u32) {
-        Some(c) => c,
-        None => '+',
-    }
+    std::char::from_digit(bord as u32, taille as u32).unwrap_or('+')
 }
 
 #[cfg(test)]
