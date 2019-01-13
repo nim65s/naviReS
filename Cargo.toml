@@ -1,5 +1,5 @@
 [package]
-name = "navy"
+name = "navires"
 version = "0.1.0"
 authors = ["Guilhem Saurel <guilhem.saurel@gmail.com>"]
 edition = "2018"
