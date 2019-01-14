@@ -36,7 +36,7 @@ impl Config {
     }
 }
 
-pub fn run(config: Config) {
+pub fn run(config: &Config) {
     let mut grille_joueur = Grille::new(config.taille_joueur, true);
     let mut grille_ia_pnj = Grille::new(config.taille_ia_pnj, config.triche);
 
