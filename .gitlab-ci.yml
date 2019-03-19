@@ -1,5 +1,9 @@
 image: rust:slim
 
+cache:
+ paths:
+   - target
+
 format:
   before_script:
     - rustup component add clippy rustfmt
