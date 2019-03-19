@@ -1,15 +1,12 @@
 image: rust:slim
 
+variables:
+  CARGO_HOME: ${CI_PROJECT_DIR}/.cargo
+
 cache:
  paths:
    - target
-
-format:
-  before_script:
-    - rustup component add clippy rustfmt
-  script:
-    - cargo clippy -- -D warnings
-    - cargo fmt --all -- --check
+   - .cargo
 
 build:
   stage: build
@@ -18,3 +15,10 @@ build:
 test:
   stage: test
   script: cargo test
+
+format:
+  before_script:
+    - rustup component add clippy rustfmt
+  script:
+    - cargo clippy -- -D warnings
+    - cargo fmt --all -- --check
