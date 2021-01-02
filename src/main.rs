@@ -1,6 +1,5 @@
 use std::env;
 
-use navires;
 use navires::Config;
 
 fn main() {
