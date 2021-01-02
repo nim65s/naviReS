@@ -7,8 +7,8 @@ fn pose_bateau(grille: &mut Grille, bateau: Bateau) -> bool {
     let mut rng = rand::thread_rng();
 
     let horizontal = rng.gen();
-    let col = rng.gen_range(0, grille.taille() - if horizontal { bateau.len } else { 0 });
-    let lig = rng.gen_range(0, grille.taille() - if horizontal { 0 } else { bateau.len });
+    let col = rng.gen_range(0..(grille.taille() - if horizontal { bateau.len } else { 0 }));
+    let lig = rng.gen_range(0..(grille.taille() - if horizontal { 0 } else { bateau.len }));
 
     grille.pose_bateau(bateau, col, lig, horizontal)
 }
@@ -28,8 +28,8 @@ pub fn joue(grille: &mut Grille) {
     let mut col;
     let mut lig;
     while {
-        col = rng.gen_range(0, grille.taille());
-        lig = rng.gen_range(0, grille.taille());
+        col = rng.gen_range(0..grille.taille());
+        lig = rng.gen_range(0..grille.taille());
         grille.deja_tire(col, lig)
     } {}
 
