@@ -1,12 +1,4 @@
-image: rust:slim
-
-variables:
-  CARGO_HOME: ${CI_PROJECT_DIR}/.cargo
-
-cache:
- paths:
-   - target
-   - .cargo
+image: memmos.laas.fr:5000/recreation/navires
 
 build:
   stage: build
@@ -14,7 +6,7 @@ build:
 
 test:
   stage: test
-  script: cargo test
+  script: cargo llvm-cov
 
 format:
   before_script:
