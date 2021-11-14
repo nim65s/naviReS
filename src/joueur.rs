@@ -21,10 +21,12 @@ fn pose_bateau(grille: &mut Grille, bateau: Bateau) -> bool {
 
 pub fn start(grille: &mut Grille) {
     println!("Remplissage manuel de la grille du joueur…");
-    while {
+    loop {
         grille.vide();
-        BATEAUX.iter().any(|bateau| !pose_bateau(grille, *bateau))
-    } {}
+        if BATEAUX.iter().all(|bateau| pose_bateau(grille, *bateau)) {
+            break;
+        }
+    }
 }
 
 pub fn joue(grille: &mut Grille) {

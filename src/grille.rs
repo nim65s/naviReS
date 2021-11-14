@@ -52,7 +52,7 @@ impl Grille {
 
         if cases
             .iter()
-            .all(|case| self.carte.contains_key(&case) && self.carte[&case].libre())
+            .all(|case| self.carte.contains_key(case) && self.carte[case].libre())
         {
             for case in cases {
                 self.carte.get_mut(&case).unwrap().add_bateau(bateau);
